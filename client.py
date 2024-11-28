@@ -1,41 +1,51 @@
 import time
+import random
 import requests
 import logging
-import random
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class VideoTranslationClient:
-    def __init__(self, base_url="http://localhost:5000", max_retries=5, backoff_factor=2, timeout=30):
-        self.base_url = base_url
-        self.max_retries = max_retries
-        self.backoff_factor = backoff_factor
-        self.timeout = timeout
+    def __init__(self):
+        self.base_url = os.getenv("BASE_URL", "http://localhost:5000")
+        self.max_retries = int(os.getenv("MAX_RETRIES", 5))
+        self.backoff_factor = float(os.getenv("BACKOFF_FACTOR", 2))
+        self.timeout = int(os.getenv("TIMEOUT", 30))
 
         self.logger = logging.getLogger(__name__)
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
     def _get_status(self):
         """Makes a GET request to the /status endpoint and logs the response."""
         try:
             self.logger.debug(f"Sending request to {self.base_url}/status")
             response = requests.get(f"{self.base_url}/status", timeout=self.timeout)
-            response.raise_for_status()  # Raise an exception for HTTP errors
+            response.raise_for_status()
             result = response.json().get("result")
             self.logger.debug(f"Received response: {result}")
             return result
+        except requests.Timeout:
+            self.logger.error("Request timed out.")
+            return None
+        except requests.ConnectionError:
+            self.logger.error("Network error occurred.")
+            return None
         except requests.RequestException as e:
-            self.logger.error(f"Error fetching status from {self.base_url}/status: {e}")
+            self.logger.error(f"Error fetching status: {e}")
             return None
 
     def check_status(self):
         """Checks the status with exponential backoff and logs every step."""
         retries = 0
         delay = 1  # Initial delay in seconds
-        start_time = time.time()  # Track the start time
+        start_time = time.time()
 
         self.logger.info("Starting to check the translation status...")
 
         while retries < self.max_retries:
-            if time.time() - start_time > self.timeout:  # Check if the overall timeout has been exceeded
+            if time.time() - start_time > self.timeout:
                 self.logger.error("Timeout reached. Stopping polling.")
                 return "timeout"
 
