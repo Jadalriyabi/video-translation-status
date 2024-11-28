@@ -1,7 +1,7 @@
-from flask import Flask, jsonify
 import random
 import time
 import logging
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
@@ -12,7 +12,14 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 @app.route('/status', methods=['GET'])
 def get_status():
-    """Simulate the video translation process with logging."""
+    """
+    Simulates the video translation process by introducing a random delay.
+    Returns a random status (pending, completed, or error) to simulate the 
+    translation process.
+
+    Returns:
+        Response (JSON): Contains the result of the translation status.
+    """
     delay = random.uniform(0, TRANSLATION_TIME)
     logging.info(f"Simulating translation process with a delay of {delay:.2f} seconds.")
     time.sleep(delay)  # Simulate the translation delay

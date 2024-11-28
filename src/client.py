@@ -8,8 +8,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class VideoTranslationClient:
-    def __init__(self):
-        self.base_url = os.getenv("BASE_URL", "http://localhost:5000")
+    def __init__(self, base_url):
+        """
+        Initializes the VideoTranslationClient with the base URL, 
+        retry settings, and timeout values from environment variables.
+
+        Loads configuration from a `.env` file and sets up logging.
+        """
+        self.base_url = base_url
         self.max_retries = int(os.getenv("MAX_RETRIES", 5))
         self.backoff_factor = float(os.getenv("BACKOFF_FACTOR", 2))
         self.timeout = int(os.getenv("TIMEOUT", 30))
@@ -18,7 +24,13 @@ class VideoTranslationClient:
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
     def _get_status(self):
-        """Makes a GET request to the /status endpoint and logs the response."""
+        """
+        Sends a GET request to the /status endpoint to check the translation status.
+
+        Returns:
+            str: Translation status result (pending, completed, or error).
+            None: If an exception occurs during the request.
+        """
         try:
             self.logger.debug(f"Sending request to {self.base_url}/status")
             response = requests.get(f"{self.base_url}/status", timeout=self.timeout)
@@ -37,7 +49,15 @@ class VideoTranslationClient:
             return None
 
     def check_status(self):
-        """Checks the status with exponential backoff and logs every step."""
+        """
+        Checks the translation status with exponential backoff and retries on failure.
+
+        Attempts to get the translation status multiple times, with exponentially 
+        increasing delay between each retry. Returns the final status.
+
+        Returns:
+            str: Final status of the translation process (completed, error, or timeout).
+        """
         retries = 0
         delay = 1  # Initial delay in seconds
         start_time = time.time()
