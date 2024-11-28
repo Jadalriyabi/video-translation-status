@@ -75,5 +75,63 @@ The project is divided into the following main components:
 This will start the Flask server on http://localhost:5000.
 
 
+---
 
-   
+## Running the Client
+
+To run the client, you can either use the command line interface (CLI) or run it directly in a script. Here's how to use the client to check the translation status:
+
+1. **Run the Client:**
+In another terminal, you can run the client to start checking the translation status:
+```
+python client.py
+```
+This will check the status of the translation at regular intervals and log the results.
+
+---
+
+## Running with Docker
+To make it easier to run the server and client in a production-like environment, we’ve included Docker support.
+
+1. **Build and start the containers using Docker Compose:**
+```
+docker-compose up --build
+```
+This will start both the server and client in separate containers, with the server accessible at http://localhost:5000 and the client running in the background checking the translation status.
+
+2. **Stop the containers:**
+```
+docker-compose down
+```
+
+---
+
+
+## Usage Example
+Here’s an example of how the client interacts with the server.
+
+1. **Run the server (from one terminal):**
+
+```
+python server.py
+```
+This starts the server on http://localhost:5000.
+
+2. **Run the client (from another terminal):**
+
+```
+python client.py
+```
+The client will:
+
+- Query the /status endpoint at regular intervals.
+- Retry with exponential backoff if the status is pending.
+- Stop retrying if the translation is completed or error.
+
+```
+2024-11-28 12:30:00 - INFO - Starting to check the translation status...
+2024-11-28 12:30:01 - INFO - Attempt 1/5 to fetch translation status...
+2024-11-28 12:30:03 - INFO - Translation is still pending. Retrying in 2.32 seconds...
+2024-11-28 12:30:05 - INFO - Attempt 2/5 to fetch translation status...
+2024-11-28 12:30:06 - INFO - Translation completed successfully.
+```
