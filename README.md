@@ -32,6 +32,7 @@ You will also find a client library that interacts with this server, implementin
 ## Project Structure
 
 The project is divided into the following main components:
+```
 /video-translation/ 
     ├── server.py # Simulated server that provides translation status 
     ├── client.py # Client library to interact with the server 
@@ -41,5 +42,5 @@ The project is divided into the following main components:
     ├── docker-compose.yml # Docker Compose configuration for running both client and server 
     ├── requirements.txt # Python dependencies 
     └── README.md
-
+```
 
