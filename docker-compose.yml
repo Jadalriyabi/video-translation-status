@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Use the server Dockerfile
+    container_name: video_translation_server
+    ports:
+      - "5000:5000"  # Expose server's port to the host
+    networks:
+      - video_translation_network
+    environment:
+      - FLASK_APP=server.py
+
+  client:
+    build:
+      context: .
+      dockerfile: client.Dockerfile  # Use the client Dockerfile
+    container_name: video_translation_client
+    networks:
+      - video_translation_network
+    depends_on:
+      - server  # Make sure the server is up before the client starts
+
+networks:
+  video_translation_network:
+    driver: bridge
