@@ -45,7 +45,7 @@ The project is divided into the following main components:
         ├── server.py
         ├── client.py
         ├── cli.py
-    ├── test_client.py
+`       ├── test_client.py
     ├── README.md
     ├── requirements.txt
     ├── .env
