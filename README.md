@@ -10,10 +10,10 @@ This project simulates a video translation system. The server provides a status 
 - [Project Structure](#project-structure)
 - [Setup Instructions](#setup-instructions)
 - [Running the Server](#running-the-server)
-- [Using the Client](#using-the-client)
-- [Running Tests](#running-tests)
-- [Dockerization](#dockerization)
+- [Running the Client](#running-the-client)
+- [Running with Docker](#running-with-docker)
 - [Usage Example](#usage-example)
+- [Testing](#testing)
 - [Features](#features)
 - [License](#license)
 
@@ -135,3 +135,54 @@ The client will:
 2024-11-28 12:30:05 - INFO - Attempt 2/5 to fetch translation status...
 2024-11-28 12:30:06 - INFO - Translation completed successfully.
 ```
+
+---
+
+
+## Testing
+
+I've included unit tests and integration tests using pytest.
+
+1. **Run the tests:**
+```
+pytest
+```
+This will run the tests, including:
+
+- Testing the exponential backoff logic in the client.
+- Simulating various server responses (pending, completed, error) using mock data.
+- Ensuring the client correctly handles retries, timeouts, and errors.
+
+2. **Test Client:**
+test_client.py
+```
+def test_translation_status(client):
+    """Test the video translation status polling with exponential backoff."""
+    status = client.check_status()
+    assert status in ["completed", "error"], f"Unexpected status: {status}"
+```
+
+---
+
+## Features
+
+
+**Server Simulations:**
+
+The server responds with a randomized status (pending, completed, or error).
+Configurable maximum translation delay via the TRANSLATION_TIME variable.
+
+**Exponential Backoff in Client:**
+
+The client retries the request using an exponential backoff strategy, with an optional jitter to avoid synchronization issues between clients.
+
+**Docker Support:**
+
+Containerized both the server and client for easy deployment using docker-compose.
+Configurable parameters (e.g., retries, timeout) can be passed via environment variables.
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
