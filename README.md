@@ -169,17 +169,17 @@ def test_translation_status(client):
 
 **Server Simulations:**
 
-The server responds with a randomized status (pending, completed, or error).
-Configurable maximum translation delay via the TRANSLATION_TIME variable.
+- The server responds with a randomized status (pending, completed, or error).
+- Configurable maximum translation delay via the TRANSLATION_TIME variable.
 
 **Exponential Backoff in Client:**
 
-The client retries the request using an exponential backoff strategy, with an optional jitter to avoid synchronization issues between clients.
+- The client retries the request using an exponential backoff strategy, with an optional jitter to avoid synchronization issues between clients.
 
 **Docker Support:**
 
-Containerized both the server and client for easy deployment using docker-compose.
-Configurable parameters (e.g., retries, timeout) can be passed via environment variables.
+- Containerized both the server and client for easy deployment using docker-compose.
+- Configurable parameters (e.g., retries, timeout) can be passed via environment variables.
 
 ---
 
