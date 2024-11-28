@@ -33,15 +33,22 @@ You will also find a client library that interacts with this server, implementin
 
 The project is divided into the following main components:
 ```
-/video-translation/ 
-    ├── server.py # Simulated server that provides translation status 
-    ├── client.py # Client library to interact with the server 
-    ├── cli.py # Command-line tool to check translation status 
-    ├── test_client.py # Unit and integration tests 
-    ├── Dockerfile # Docker file to containerize the project 
-    ├── docker-compose.yml # Docker Compose configuration for running both client and server 
-    ├── requirements.txt # Python dependencies 
-    └── README.md
+/video-translation/
+    └── .Docker/
+        └── Dockerfile
+        └── client.Dockerfile
+        └── docker-compose.yml
+    └── .github/
+        └── workflows/
+            └── python.yml
+    └── .src/
+        ├── server.py
+        ├── client.py
+        ├── cli.py
+    ├── test_client.py
+    ├── README.md
+    ├── requirements.txt
+    ├── .env
 ```
 
 
