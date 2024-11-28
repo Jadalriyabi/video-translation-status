@@ -44,3 +44,36 @@ The project is divided into the following main components:
     └── README.md
 ```
 
+
+
+---
+
+## Setup Instructions
+
+1. **Clone the repository:**
+   ```
+   git clone https://github.com/yourusername/video-translation.git
+   cd video-translation
+   ```
+
+2. **Create and activate a virtual environment (optional but recommended):**
+   ```
+   python3 -m venv venv
+   source venv/bin/activate   # For Mac/Linux
+   venv\Scripts\activate      # For Windows
+   ```
+
+3. **Install dependencies:**
+   ```
+   pip install -r requirements.txt
+   ```
+
+4. **Run the server (in one terminal):**
+    ```
+    python server.py
+    ```
+This will start the Flask server on http://localhost:5000.
+
+
+
+   
