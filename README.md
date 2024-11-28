@@ -8,6 +8,16 @@ This project simulates a video translation service with a server that provides t
 
 ### Server
 
-1. Install Flask:
+1. Install dependencies:
    ```bash
    pip install Flask
+   pip install requests
+
+2. Run the server:
+   ```bash
+   python server.py
+
+
+
+
+
