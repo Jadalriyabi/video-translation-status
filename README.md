@@ -11,6 +11,7 @@ This project simulates a video translation system. The server provides a status 
 - [Setup Instructions](#setup-instructions)
 - [Running the Server](#running-the-server)
 - [Running the Client](#running-the-client)
+- [Access the UI](#access-the-ui)
 - [Running with Docker](#running-with-docker)
 - [Usage Example](#usage-example)
 - [Testing](#testing)
@@ -42,6 +43,10 @@ The project is divided into the following main components:
         └── workflows/
             └── python.yml
     └── .src/
+        └── .static/
+            └── .styles.css/
+        └── .templates/
+            └── .index.html/
         ├── server.py
         ├── client.py
         ├── cli.py
@@ -112,6 +117,24 @@ docker-compose down
 ```
 
 ---
+
+## Access the UI
+
+In addition to the server and client code, this project also includes a simple **UI** that showcases why I am enthusiastic about the Software Engineering role at HeyGen, and allows you to visualize key details like skills, passions, and career goals.
+
+To access the UI, follow these steps:
+
+1. **Run the local server (if not already running):**
+   The UI relies on the server being active to simulate video translation statuses. Make sure the server is running on your local machine.
+
+2. **Open the UI in your browser:**
+After the server is running, you can view the UI by opening the `ui/index.html` file in your web browser.
+
+run the following command:
+```
+python server.py
+```
+Then, open http://127.0.0.1:5000/ in your browser to view the UI.
 
 
 ## Usage Example
