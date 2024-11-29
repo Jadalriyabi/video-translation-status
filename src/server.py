@@ -1,7 +1,7 @@
 import random
 import time
 import logging
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
 
@@ -9,6 +9,13 @@ app = Flask(__name__)
 TRANSLATION_TIME = 10
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+@app.route('/')
+def index():
+    """
+    Renders the main UI page (index.html)
+    """
+    return render_template('index.html')
 
 @app.route('/status', methods=['GET'])
 def get_status():
